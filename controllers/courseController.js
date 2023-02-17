@@ -1,14 +1,16 @@
 import Course from "../models/Course.js";
 
 export const createCourse = async (req, res) => {
-  const course = await Course.create(req.body);
+  
   try {
-    req.status(201).json({
-      status: "succes",
+    const course = await Course.create(req.body);
+    res.status(201).json({
+      status: "success",
       course,
     });
-  } catch {
-    req.status(404).json({
+   } 
+  catch {
+    res.status(400).json({
       status: "fail",
       error,
     });

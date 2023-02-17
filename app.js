@@ -11,8 +11,8 @@ const app = express();
 mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://localhost/smartedu-db', {
   autoIndex: false,
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
   // //useFindAndModify: false,
   // //useCreateIndex: true
 }).then(() => {
@@ -26,6 +26,9 @@ app.set("view engine", "ejs");
 
 //MIDDLEWARES
 app.use(express.static('public')); //We specify the location of static files
+app.use(express.json()) //for parsing application/json
+app.use(express.urlencoded({ extended: true})) // for parsing application/x-www-form-urlencoded
+
 
 //ROUTER
 app.use("/", pageRoute);
