@@ -1,0 +1,39 @@
+import express from "express";
+import mongoose from "mongoose";
+
+import pageRoute from "./routes/pageRoute.js";
+import courseRoute from "./routes/courseRoute.js";
+
+//Express start
+const app = express();
+
+//CONNECT DB
+mongoose.set('strictQuery', false);
+mongoose.connect('mongodb://localhost/smartedu-db', {
+  autoIndex: false,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
+  // //useFindAndModify: false,
+  // //useCreateIndex: true
+}).then(() => {
+  console.log('DB Connected Successfuly')
+}).catch((err) => {
+  console.log(err)
+});
+
+//TEMPLATE ENGINE
+app.set("view engine", "ejs");
+
+//MIDDLEWARES
+app.use(express.static('public')); //We specify the location of static files
+
+//ROUTER
+app.use("/", pageRoute);
+app.use("/courses", courseRoute);
+
+
+//Sever listen
+const port = 3000;
+app.listen(port, () => {
+  console.log(`App started on port ${port}`);
+});
