@@ -1,24 +1,21 @@
 import express from "express";
+import pageRoute from "./routes/pageRoute.mjs";
 
+
+
+//Express start
 const app = express();
 
 //TEMPLATE ENGINE
 app.set("view engine", "ejs");
 
 //MIDDLEWARES
-app.use(express.static("public"));
+app.use(express.static('public')); //We specify the location of static files
 
 //ROUTER
-app.get("/", (req, res) => {
-    res.status(200).render("index", {
-        page_name: "index"
-    });
-});
-app.get("/about", (req, res) => {
-  res.status(200).render("about", {
-        page_name: "about"
-    });
-});
+//Page Controller
+app.use("/", pageRoute );
+
 
 //Sever listen
 const port = 3000;

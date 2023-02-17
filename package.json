@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Education Portal",
   "main": "app.mjs",
+  
   "scripts": {
     "start": "nodemon app.js"
   },
