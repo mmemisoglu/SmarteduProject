@@ -1,12 +1,12 @@
-import Course from "../models/Course.js";
 import Category from "../models/Category.js";
 
-export const createCourse = async (req, res) => {
+export const createCategory = async (req, res) => {
   try {
-    const course = await Course.create(req.body);
+    const category = await Category.create(req.body);
+    
     res.status(201).json({
       status: "success",
-      course,
+      category,
     });
   } catch (error) {
     res.status(400).json({
@@ -19,17 +19,10 @@ export const createCourse = async (req, res) => {
 
 export const getAllCourse = async (req, res) => {
   try {
-    const categorySlug = req.query.categories;
-    let filter = {};
-    if(categorySlug){
-      const category = await Category.findOne({slug:categorySlug});
-      filter = {category:category._id}
-    }
-    const courses = await Course.find(filter);
-    const categories = await Category.find();
+    const courses = await Course.find();
+
     res.status(200).render('courses', {
       courses,
-      categories,
       page_name: 'courses',
     })
   } catch (error) {
@@ -55,3 +48,5 @@ export const getCourse = async (req, res) => {
     });
   }
 };
+
+

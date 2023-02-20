@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import pageRoute from "./routes/pageRoute.js";
 import courseRoute from "./routes/courseRoute.js";
+import categoryRoute from "./routes/categoryRoute.js";
 
 //Express start
 const app = express();
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true})) // for parsing application/x-www-
 //ROUTER
 app.use("/", pageRoute);
 app.use("/courses", courseRoute);
+app.use("/categories", categoryRoute);
 
 
 //Sever listen
