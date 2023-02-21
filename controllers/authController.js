@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 export const createUser = async (req, res) => {
   try {
@@ -16,15 +17,23 @@ export const createUser = async (req, res) => {
   }
 };
 
-
-export const getAllCourse = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
-    const courses = await Course.find();
+    
+    const {email, password} = req.body;
+    
+    await User.findOne({email: email}, (err,user) => {
+      
+      if(user){ 
+        bcrypt.compare(password, user.password , (err,same) => {
+          if(same) {
+            // USER SESSION
+            res.status(200).send("Logged");
+          }
+        }) 
+      }
+    }).clone(err => console.log(err))
 
-    res.status(200).render('courses', {
-      courses,
-      page_name: 'courses',
-    })
   } catch (error) {
     res.status(400).json({
       status: "fail",
@@ -33,20 +42,5 @@ export const getAllCourse = async (req, res) => {
   }
 };
 
-export const getCourse = async (req, res) => {
-  try {
-    const course = await Course.findOne({ slug: req.params.slug });
-
-    res.status(200).render('course', {
-      course,
-      page_name: 'courses',
-    })
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      error,
-    });
-  }
-};
 
 
