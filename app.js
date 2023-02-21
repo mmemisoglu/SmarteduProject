@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import pageRoute from "./routes/pageRoute.js";
 import courseRoute from "./routes/courseRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
@@ -37,7 +38,8 @@ app.use(express.urlencoded({ extended: true})) // for parsing application/x-www-
 app.use(session({
   secret: 'my_keyboard_cat',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: 'mongodb://localhost/smartedu-db' })
 }))
 
 
