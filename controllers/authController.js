@@ -6,23 +6,19 @@ import Course from "../models/Course.js"
 export const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    
+    req.flash("success","You have successfully registered.")
     res.status(201).redirect("/login")
   } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      error,
-    });
+    req.flash("error","There was a mistake. Please try again.")
+    res.status(400).redirect("/register")
+    
   }
 };
 
 export const loginUser = async (req, res) => {
   try {
-    
     const {email, password} = req.body;
-    
     await User.findOne({email: email}, (err,user) => {
-      
       if(user){ 
         bcrypt.compare(password, user.password , (err,same) => {
           // USER SESSION
@@ -31,7 +27,6 @@ export const loginUser = async (req, res) => {
         }) 
       }
     }).clone(err => console.log(err))
-
   } catch (error) {
     res.status(400).json({
       status: "fail",
