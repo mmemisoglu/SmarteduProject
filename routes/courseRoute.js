@@ -8,6 +8,7 @@ router.route('/').post(roleMiddleware.roleCheck(["teacher","admin"]) ,courseCont
 router.route('/').get(courseController.getAllCourse);
 router.route('/:slug').get(courseController.getCourse);
 router.route('/enroll').post(courseController.enrollCourse);
+router.route('/release').post(courseController.releaseCourse);
 
 //EXPORT
 export default router;
